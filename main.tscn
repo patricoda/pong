@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://c88bxv40o7me4"]
+
+[ext_resource type="PackedScene" uid="uid://g2mj11lpslje" path="res://ball.tscn" id="1_bgcyt"]
+[ext_resource type="Script" path="res://main.gd" id="1_ryb73"]
+[ext_resource type="PackedScene" uid="uid://sxiyppewq205" path="res://paddle.tscn" id="2_ce40c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rrg7l"]
+size = Vector2(1144.25, 20)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_uypg2"]
+a = Vector2(0, 664)
+b = Vector2(0, 0)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_ryb73")
+
+[node name="Arena" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Ball" parent="." instance=ExtResource("1_bgcyt")]
+position = Vector2(567, 310)
+
+[node name="Paddle1" parent="." instance=ExtResource("2_ce40c")]
+position = Vector2(16, 216)
+upInput = "p1_move_up"
+downInput = "p1_move_down"
+
+[node name="Paddle2" parent="." instance=ExtResource("2_ce40c")]
+position = Vector2(1104, 216)
+upInput = "p2_move_up"
+downInput = "p2_move_down"
+
+[node name="Boundaries" type="StaticBody2D" parent="."]
+
+[node name="Ceiling" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(575.75, -8)
+shape = SubResource("RectangleShape2D_rrg7l")
+
+[node name="Floor" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(576, 656)
+shape = SubResource("RectangleShape2D_rrg7l")
+
+[node name="LeftScoringBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftScoringBox"]
+shape = SubResource("SegmentShape2D_uypg2")
+
+[node name="RightScoringBox" type="Area2D" parent="."]
+position = Vector2(1152, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightScoringBox"]
+shape = SubResource("SegmentShape2D_uypg2")
+
+[node name="Player1Score" type="Label" parent="."]
+offset_left = 320.0
+offset_top = 64.0
+offset_right = 360.0
+offset_bottom = 104.0
+
+[node name="Player2Score" type="Label" parent="."]
+offset_left = 792.0
+offset_top = 64.0
+offset_right = 832.0
+offset_bottom = 104.0
+horizontal_alignment = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 576.0
+offset_right = 616.0
+offset_bottom = 40.0
+scale = Vector2(0.120001, 16.4)
+
+[connection signal="body_entered" from="LeftScoringBox" to="." method="_on_left_scoring_box_body_entered"]
+[connection signal="body_entered" from="RightScoringBox" to="." method="_on_right_scoring_box_body_entered"]
