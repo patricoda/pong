@@ -13,6 +13,7 @@ b = Vector2(0, 0)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_ryb73")
+ball_velocity = 600
 
 [node name="Arena" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -27,6 +28,7 @@ position = Vector2(567, 310)
 
 [node name="Paddle1" parent="." instance=ExtResource("2_ce40c")]
 position = Vector2(16, 216)
+wall_min_slide_angle = 3.14159
 upInput = "p1_move_up"
 downInput = "p1_move_down"
 
